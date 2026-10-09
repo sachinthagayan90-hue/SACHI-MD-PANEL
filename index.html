@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SACHI-MD Private Panel</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#111a2d;border-bottom:1px solid #293650}
+header h2{margin:0;color:#63e6be}
+header p,small{color:#aab7ce}
+main{padding:18px;max-width:900px;margin:auto}
+.welcome,.card{padding:20px;border-radius:14px;background:#131c2e;border:1px solid #293650;margin-bottom:14px}
+.welcome{background:linear-gradient(135deg,#173b50,#17213d)}
+.welcome h1{font-size:25px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.value{color:#63e6be;font-size:20px;font-weight:bold;margin:12px 0}
+.status{color:#75edbd}
+button{padding:12px 16px;border:0;border-radius:8px;background:#263752;color:white;font-weight:bold}
+footer{text-align:center;color:#8492ad;padding:20px;font-size:12px}
+@media(max-width:480px){.grid{grid-template-columns:1fr}main{padding:12px}}
+</style>
+</head>
+<body>
+<header><h2>✦ SACHI-MD</h2><p>PRIVATE HOSTING PANEL</p></header>
+<main>
+<section class="welcome">
+<h1>Welcome, Sachintha 👋</h1>
+<p>Your personal bot hosting dashboard.</p>
+<strong class="status">● PANEL READY</strong>
+</section>
+<div class="grid">
+<section class="card"><h3>🖥️ Server Status</h3><div class="value">Not Connected</div><small>Server connection required</small></section>
+<section class="card"><h3>⚡ CPU Usage</h3><div class="value">--</div><small>Live stats unavailable</small></section>
+<section class="card"><h3>🧠 Memory Usage</h3><div class="value">--</div><small>Connect a server to view RAM</small></section>
+<section class="card"><h3>📁 Bot Files</h3><div class="value">No Server</div><small>File manager not connected</small></section>
+</div>
+<section class="card" style="margin-top:14px">
+<h3>🚀 Server Controls</h3>
+<p><small>These controls are a preview. They do not start or stop a real bot yet.</small></p>
+<button onclick="alert('A server backend must be connected first.')">Start Server</button>
+<button onclick="alert('A server backend must be connected first.')">Restart</button>
+<button onclick="alert('A server backend must be connected first.')">Stop Server</button>
+</section>
+</main>
+<footer>SACHI-MD PRIVATE PANEL · Personal dashboard</footer>
+</body>
+</html>
