@@ -1,49 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SACHI-MD Private Panel</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
-header{padding:22px;background:#111a2d;border-bottom:1px solid #293650}
-header h2{margin:0;color:#63e6be}
-header p,small{color:#aab7ce}
-main{padding:18px;max-width:900px;margin:auto}
-.welcome,.card{padding:20px;border-radius:14px;background:#131c2e;border:1px solid #293650;margin-bottom:14px}
-.welcome{background:linear-gradient(135deg,#173b50,#17213d)}
-.welcome h1{font-size:25px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.value{color:#63e6be;font-size:20px;font-weight:bold;margin:12px 0}
-.status{color:#75edbd}
-button{padding:12px 16px;border:0;border-radius:8px;background:#263752;color:white;font-weight:bold}
-footer{text-align:center;color:#8492ad;padding:20px;font-size:12px}
-@media(max-width:480px){.grid{grid-template-columns:1fr}main{padding:12px}}
-</style>
-</head>
-<body>
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}header{padding:22px;background:#111a2d;border-bottom:1px solid #293650}header h2{margin:0;color:#63e6be}header p,small{color:#aab7ce}main{padding:18px;max-width:960px;margin:auto}.welcome,.card{padding:20px;border-radius:14px;background:#131c2e;border:1px solid #293650;margin-bottom:14px}.welcome{background:linear-gradient(135deg,#173b50,#17213d)}.welcome h1{font-size:25px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.value{color:#63e6be;font-size:20px;font-weight:bold;margin:12px 0}.status{color:#75edbd}button{padding:12px 16px;border:0;border-radius:8px;background:#263752;color:white;font-weight:bold;margin:4px;cursor:pointer}button.danger{background:#7f2938}button:disabled{opacity:.5;cursor:wait}input{padding:11px;border-radius:8px;border:1px solid #293650;background:#0b1020;color:white;width:100%;margin:6px 0}footer{text-align:center;color:#8492ad;padding:20px;font-size:12px}pre{white-space:pre-wrap;overflow-wrap:anywhere;color:#c8d4e8;max-height:360px;overflow:auto}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.muted{color:#aab7ce}.notice{padding:10px;border-radius:8px;background:#10192b;margin-top:10px}@media(max-width:520px){.grid{grid-template-columns:1fr}main{padding:12px}}
+</style></head><body>
 <header><h2>✦ SACHI-MD</h2><p>PRIVATE HOSTING PANEL</p></header>
 <main>
-<section class="welcome">
-<h1>Welcome, Sachintha 👋</h1>
-<p>Your personal bot hosting dashboard.</p>
-<strong class="status">● PANEL READY</strong>
-</section>
+<section class="welcome"><h1>Welcome, Sachintha 👋</h1><p>Your personal hosting dashboard.</p><strong class="status">● PANEL READY</strong></section>
+<section class="card"><h3>🔐 Backend Connection</h3><p class="muted">Enter your separately deployed panel API URL and password. Password stays in this browser tab only.</p>
+<label for="apiUrl">Backend URL</label><input id="apiUrl" placeholder="https://your-panel-api.up.railway.app">
+<label for="panelPassword">Panel password</label><input id="panelPassword" type="password" autocomplete="off" placeholder="Password set in Railway Variables">
+<div class="row"><button id="connectBtn" onclick="refreshStatus()">Connect / Refresh</button><span id="message" role="status" class="muted">Not connected</span></div></section>
 <div class="grid">
-<section class="card"><h3>🖥️ Server Status</h3><div class="value">Not Connected</div><small>Server connection required</small></section>
-<section class="card"><h3>⚡ CPU Usage</h3><div class="value">--</div><small>Live stats unavailable</small></section>
-<section class="card"><h3>🧠 Memory Usage</h3><div class="value">--</div><small>Connect a server to view RAM</small></section>
-<section class="card"><h3>📁 Bot Files</h3><div class="value">No Server</div><small>File manager not connected</small></section>
+<section class="card"><h3>🖥️ Server Status</h3><div class="value" id="status">Not connected</div><small id="statusNote">Connect backend to check actual deployment</small></section>
+<section class="card"><h3>⚡ CPU Usage</h3><div class="value" id="cpu">Unavailable</div><small>Not provided by this Railway API starter</small></section>
+<section class="card"><h3>🧠 Memory Usage</h3><div class="value" id="memory">Unavailable</div><small>Not provided by this Railway API starter</small></section>
+<section class="card"><h3>📁 Bot Files</h3><div class="value">Disabled</div><small>File manager is not enabled for security</small></section>
 </div>
-<section class="card" style="margin-top:14px">
-<h3>🚀 Server Controls</h3>
-<p><small>These controls are a preview. They do not start or stop a real bot yet.</small></p>
-<button onclick="alert('A server backend must be connected first.')">Start Server</button>
-<button onclick="alert('A server backend must be connected first.')">Restart</button>
-<button onclick="alert('A server backend must be connected first.')">Stop Server</button>
-</section>
-</main>
-<footer>SACHI-MD PRIVATE PANEL · Personal dashboard</footer>
-</body>
-</html>
+<section class="card"><h3>🚀 Server Controls</h3><p class="muted">Actions affect only the exact Railway deployment configured in the backend. Confirm the target IDs before use.</p>
+<button onclick="doAction('start')">Start / Deploy</button><button onclick="doAction('restart')">Restart</button><button class="danger" onclick="doAction('stop')">Stop</button></section>
+<section class="card"><h3>📜 Logs</h3><div class="row"><button onclick="loadLogs()">Refresh Logs</button></div><pre id="logs">Connect to the backend to request logs.</pre></section>
+</main><footer>SACHI-MD PRIVATE PANEL · Personal dashboard</footer>
+<script>
+function cfg(){return {url:document.getElementById('apiUrl').value.trim().replace(/\/+$/,''),password:document.getElementById('panelPassword').value};}
+async function api(path,options={}){const c=cfg();if(!c.url||!c.password)throw Error('Enter the backend URL and password.');const r=await fetch(c.url+path,{...options,headers:{'Content-Type':'application/json','Authorization':'Bearer '+c.password,...(options.headers||{})}});const d=await r.json().catch(()=>({error:'Invalid backend response'}));if(!r.ok)throw Error(d.error||('HTTP '+r.status));return d;}
+function setMessage(t){document.getElementById('message').textContent=t;}
+async function refreshStatus(){setMessage('Connecting…');try{const d=await api('/api/status');document.getElementById('status').textContent=d.status||'Unknown';document.getElementById('statusNote').textContent=d.createdAt?'Latest deployment created: '+d.createdAt:'Backend connected';setMessage('Connected');}catch(e){setMessage('Error: '+e.message);}}
+async function doAction(action){const msg=action==='stop'?'STOP the configured Railway deployment':action==='restart'?'RESTART the configured Railway deployment':'trigger a new deployment for the configured service';if(!confirm('Are you sure you want to '+msg+'?'))return;setMessage('Sending '+action+'…');try{const d=await api('/api/'+action,{method:'POST'});setMessage(d.message||'Request sent');setTimeout(refreshStatus,2500);}catch(e){setMessage('Error: '+e.message);}}
+async function loadLogs(){const el=document.getElementById('logs');el.textContent='Loading logs…';try{const d=await api('/api/logs');el.textContent=(d.logs||[]).map(x=>typeof x==='string'?x:JSON.stringify(x)).join('\n')||'No log lines returned.';}catch(e){el.textContent='Logs unavailable: '+e.message;}}
+</script></body></html>
